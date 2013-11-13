@@ -114,12 +114,11 @@
 #pragma - mark 事件响应
 - (void)toolsBarButtonClicked:(UIButton *)btn
 {
-    NSLog(@"工具条的button");
+    
 }
 
 - (void)backButtonClicked
 {
     [super backButtonClicked];
-    NSLog(@"返回");
 }
 @end

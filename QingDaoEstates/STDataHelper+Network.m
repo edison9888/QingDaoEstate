@@ -24,7 +24,10 @@
         if (jsonData)
         {
             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
-
+            /*存储本地*/
+            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            [userDefault setObject:jsonDict forKey:@"topicNew"];
+            
             STModelHouse *house = [[STModelHouse alloc] init];
             house.houseImg = [jsonDict objectForKey:@"img"];
             house.houseMemo = [jsonDict objectForKey:@"memo"];

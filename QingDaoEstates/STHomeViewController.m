@@ -23,9 +23,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    /*初始化数据保存*/
-    _dataArray = [[NSMutableArray alloc] init];
-    
     /*导航栏标题*/
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)];
     [self.navigationItem.titleView addSubview:titleLabel];
@@ -45,22 +42,18 @@
     UIImageView *headerView = [[UIImageView alloc] init];
     [self.view addSubview:headerView];
     headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 142);
-//    headerView.backgroundColor = [UIColor yellowColor];
     
-    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (142-60)/2.0f, 80, 60)];
+    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, (142-60)/2.0f, 80, 60)];
     [headerView addSubview:_headerImageView];
-//    _headerImageView.backgroundColor = [UIColor redColor];
     
-    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(100+5, (142-60)/2.0f, 200, 25)];
+    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(110+5, (142-60)/2.0f, 180, 25)];
     [headerView addSubview:_headerLabel];
-//    _headerLabel.backgroundColor = [UIColor greenColor];
     _headerLabel.font = [UIFont boldSystemFontOfSize:15.0f];
     _headerLabel.numberOfLines = 1;
     _headerLabel.textColor = [UIColor blackColor];
     
-    _headerContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(100, (142-60)/2.0f+25, 200, 50)];
+    _headerContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(110, (142-60)/2.0f+25, 200, 50)];
     [headerView addSubview:_headerContentTextView];
-//    _headerContentLabel.backgroundColor = [UIColor cyanColor];
     _headerContentTextView.font = [UIFont boldSystemFontOfSize:15.0f];
     _headerContentTextView.showsVerticalScrollIndicator = NO;
     _headerContentTextView.editable = NO;
@@ -87,10 +80,31 @@
             [btn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
-    /*网络加载头条新闻*/
-    [[STDataHelper sharedInstance] homeFetchNetworkDataTopicNewStart];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewCompleted:) name:kNotificationHomeFetchNetworkDataTopicNewCompleted object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewFailed:) name:kNotificationHomeFetchNetworkDataTopicNewFailed object:nil];
+    /*加载头条新闻*/
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if ([userDefault objectForKey:@"topicNew"])
+    {
+        /*本地*/
+        NSDictionary *topicNewDict = [userDefault objectForKey:@"topicNew"];
+        STModelHouse *house = [[STModelHouse alloc] init];
+        house.houseImg = [topicNewDict objectForKey:@"img"];
+        house.houseMemo = [topicNewDict objectForKey:@"memo"];
+        house.houseNid = [topicNewDict objectForKey:@"nid"];
+        
+        STModelTopicNew *topicNew = [[STModelTopicNew alloc] init];
+        topicNew.topicNewHouse = house;
+        topicNew.topicNewTitle = [topicNewDict objectForKey:@"title"];
+        
+        [_headerImageView setImageWithURL:[NSURL URLWithString:topicNew.topicNewHouse.houseImg]];
+        _headerLabel.text = topicNew.topicNewTitle;
+        _headerContentTextView.text = topicNew.topicNewHouse.houseMemo;
+        
+    }else {
+        /*网络*/
+        [[STDataHelper sharedInstance] homeFetchNetworkDataTopicNewStart];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewCompleted:) name:kNotificationHomeFetchNetworkDataTopicNewCompleted object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewFailed:) name:kNotificationHomeFetchNetworkDataTopicNewFailed object:nil];
+    }
 }
 #pragma - mark 通知回调
 - (void)homeFetchNetworkDataTopicNewCompleted:(NSNotification *)notification
