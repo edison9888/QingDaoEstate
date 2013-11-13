@@ -27,6 +27,14 @@
 		D28B50761833698900CF990A /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D28B506B1833698900CF990A /* SDWebImagePrefetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D28B50771833698900CF990A /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D28B506D1833698900CF990A /* UIButton+WebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D28B50781833698900CF990A /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D28B506F1833698900CF990A /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D29B4F531833863D0073CCB4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F4A1833863D0073CCB4 /* FMDatabase.m */; };
+		D29B4F541833863D0073CCB4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F4C1833863D0073CCB4 /* FMDatabaseAdditions.m */; };
+		D29B4F551833863D0073CCB4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F4E1833863D0073CCB4 /* FMDatabasePool.m */; };
+		D29B4F561833863D0073CCB4 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F501833863D0073CCB4 /* FMDatabaseQueue.m */; };
+		D29B4F571833863D0073CCB4 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F521833863D0073CCB4 /* FMResultSet.m */; };
+		D29B4F59183386C80073CCB4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D29B4F58183386C80073CCB4 /* libsqlite3.0.dylib */; };
+		D29B4F5B18339C7C0073CCB4 /* SQLite3.db in Resources */ = {isa = PBXBuildFile; fileRef = D29B4F5A18339C7C0073CCB4 /* SQLite3.db */; };
+		D29B4F5E1833B5690073CCB4 /* STNewHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D29B4F5D1833B5690073CCB4 /* STNewHouseCell.m */; };
 		D29EE6C318322B7600D5FC84 /* STDetailWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D29EE6C218322B7600D5FC84 /* STDetailWebViewController.m */; };
 		D2D6EEF418311A2400C8B6BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D6EEF318311A2400C8B6BA /* Foundation.framework */; };
 		D2D6EEF618311A2400C8B6BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D6EEF518311A2400C8B6BA /* CoreGraphics.framework */; };
@@ -565,6 +573,20 @@
 		D28B506D1833698900CF990A /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		D28B506E1833698900CF990A /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		D28B506F1833698900CF990A /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		D29B4F491833863D0073CCB4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		D29B4F4A1833863D0073CCB4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		D29B4F4B1833863D0073CCB4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		D29B4F4C1833863D0073CCB4 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		D29B4F4D1833863D0073CCB4 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		D29B4F4E1833863D0073CCB4 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		D29B4F4F1833863D0073CCB4 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		D29B4F501833863D0073CCB4 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		D29B4F511833863D0073CCB4 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		D29B4F521833863D0073CCB4 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		D29B4F58183386C80073CCB4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		D29B4F5A18339C7C0073CCB4 /* SQLite3.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = SQLite3.db; sourceTree = "<group>"; };
+		D29B4F5C1833B5690073CCB4 /* STNewHouseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STNewHouseCell.h; sourceTree = "<group>"; };
+		D29B4F5D1833B5690073CCB4 /* STNewHouseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STNewHouseCell.m; sourceTree = "<group>"; };
 		D29EE6C118322B7600D5FC84 /* STDetailWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDetailWebViewController.h; sourceTree = "<group>"; };
 		D29EE6C218322B7600D5FC84 /* STDetailWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDetailWebViewController.m; sourceTree = "<group>"; };
 		D2D6EEF018311A2400C8B6BA /* QingDaoEstates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QingDaoEstates.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1063,6 +1085,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D29B4F59183386C80073CCB4 /* libsqlite3.0.dylib in Frameworks */,
 				D2D6EEF618311A2400C8B6BA /* CoreGraphics.framework in Frameworks */,
 				D2D6EEF818311A2400C8B6BA /* UIKit.framework in Frameworks */,
 				D2D6EEF418311A2400C8B6BA /* Foundation.framework in Frameworks */,
@@ -1144,6 +1167,8 @@
 			children = (
 				D26CE52C1831BE870052D377 /* STNewHouseViewController.h */,
 				D26CE52D1831BE870052D377 /* STNewHouseViewController.m */,
+				D29B4F5C1833B5690073CCB4 /* STNewHouseCell.h */,
+				D29B4F5D1833B5690073CCB4 /* STNewHouseCell.m */,
 			);
 			name = NewHouse;
 			sourceTree = "<group>";
@@ -1185,6 +1210,23 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		D29B4F481833863D0073CCB4 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				D29B4F491833863D0073CCB4 /* FMDatabase.h */,
+				D29B4F4A1833863D0073CCB4 /* FMDatabase.m */,
+				D29B4F4B1833863D0073CCB4 /* FMDatabaseAdditions.h */,
+				D29B4F4C1833863D0073CCB4 /* FMDatabaseAdditions.m */,
+				D29B4F4D1833863D0073CCB4 /* FMDatabasePool.h */,
+				D29B4F4E1833863D0073CCB4 /* FMDatabasePool.m */,
+				D29B4F4F1833863D0073CCB4 /* FMDatabaseQueue.h */,
+				D29B4F501833863D0073CCB4 /* FMDatabaseQueue.m */,
+				D29B4F511833863D0073CCB4 /* FMResultSet.h */,
+				D29B4F521833863D0073CCB4 /* FMResultSet.m */,
+			);
+			path = FMDB;
+			sourceTree = "<group>";
+		};
 		D2D6EEE718311A2400C8B6BA = {
 			isa = PBXGroup;
 			children = (
@@ -1207,6 +1249,7 @@
 		D2D6EEF218311A2400C8B6BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D29B4F58183386C80073CCB4 /* libsqlite3.0.dylib */,
 				D2D6EEF318311A2400C8B6BA /* Foundation.framework */,
 				D2D6EEF518311A2400C8B6BA /* CoreGraphics.framework */,
 				D2D6EEF718311A2400C8B6BA /* UIKit.framework */,
@@ -1228,6 +1271,8 @@
 				D21F9905183306DA008AB3C1 /* STDataHelper+Network.m */,
 				D21F9907183306F1008AB3C1 /* STDataHelper+Database.h */,
 				D21F9908183306F1008AB3C1 /* STDataHelper+Database.m */,
+				D29B4F5A18339C7C0073CCB4 /* SQLite3.db */,
+				D29B4F481833863D0073CCB4 /* FMDB */,
 				D28B505B1833698900CF990A /* SDWebImage */,
 				D21F994718330F66008AB3C1 /* Model */,
 				D26CE52F1831D72A0052D377 /* BlockButton */,
@@ -2208,6 +2253,7 @@
 				D2D6F13218311D4000C8B6BA /* checkmark_checked.png in Resources */,
 				D2D6F19318311D4000C8B6BA /* LP_huiYuanYouHui_Placeholder@2x.png in Resources */,
 				D2D6F24418311D4000C8B6BA /* LPSearch@2x.png in Resources */,
+				D29B4F5B18339C7C0073CCB4 /* SQLite3.db in Resources */,
 				D2D6F18C18311D4000C8B6BA /* LP_freshhouse_housetype_Placeholder@2x.png in Resources */,
 				D2D6F11E18311D4000C8B6BA /* cell_right_arraw.png in Resources */,
 				D2D6F16918311D4000C8B6BA /* LP_fangjiapinggu_didian@2x.png in Resources */,
@@ -2326,6 +2372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D29B4F5E1833B5690073CCB4 /* STNewHouseCell.m in Sources */,
 				D2D6EF0018311A2400C8B6BA /* main.m in Sources */,
 				D28B50721833698900CF990A /* SDImageCache.m in Sources */,
 				D28B50781833698900CF990A /* UIImageView+WebCache.m in Sources */,
@@ -2339,13 +2386,18 @@
 				D29EE6C318322B7600D5FC84 /* STDetailWebViewController.m in Sources */,
 				D21F9909183306F1008AB3C1 /* STDataHelper+Database.m in Sources */,
 				D21F9906183306DA008AB3C1 /* STDataHelper+Network.m in Sources */,
+				D29B4F551833863D0073CCB4 /* FMDatabasePool.m in Sources */,
+				D29B4F531833863D0073CCB4 /* FMDatabase.m in Sources */,
 				D21F99031833066F008AB3C1 /* STDataHelper.m in Sources */,
 				D28B50731833698900CF990A /* SDWebImageDecoder.m in Sources */,
+				D29B4F561833863D0073CCB4 /* FMDatabaseQueue.m in Sources */,
+				D29B4F571833863D0073CCB4 /* FMResultSet.m in Sources */,
 				D2651D181832740800D0ACAA /* STRentHouseViewController.m in Sources */,
 				D28B50751833698900CF990A /* SDWebImageManager.m in Sources */,
 				D21F994D18331388008AB3C1 /* STModelTopicNew.m in Sources */,
 				D2D6EF0418311A2400C8B6BA /* STAppDelegate.m in Sources */,
 				D2651D14183270AE00D0ACAA /* STResoldHouseViewController.m in Sources */,
+				D29B4F541833863D0073CCB4 /* FMDatabaseAdditions.m in Sources */,
 				D28B50761833698900CF990A /* SDWebImagePrefetcher.m in Sources */,
 				D28B50771833698900CF990A /* UIButton+WebCache.m in Sources */,
 				D26CE5351831DA1E0052D377 /* STBlockButton.m in Sources */,

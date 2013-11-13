@@ -46,11 +46,12 @@
     _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, (142-60)/2.0f, 80, 60)];
     [headerView addSubview:_headerImageView];
     
-    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(110+5, (142-60)/2.0f, 180, 25)];
+    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(110+5, (142-60)/2.0f, 180, 15)];
     [headerView addSubview:_headerLabel];
     _headerLabel.font = [UIFont boldSystemFontOfSize:15.0f];
     _headerLabel.numberOfLines = 1;
     _headerLabel.textColor = [UIColor blackColor];
+//    _headerLabel.backgroundColor = [UIColor yellowColor];
     
     _headerContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(110, (142-60)/2.0f+25, 200, 50)];
     [headerView addSubview:_headerContentTextView];
@@ -101,13 +102,13 @@
         
     }else {
         /*网络*/
-        [[STDataHelper sharedInstance] homeFetchNetworkDataTopicNewStart];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewCompleted:) name:kNotificationHomeFetchNetworkDataTopicNewCompleted object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataTopicNewFailed:) name:kNotificationHomeFetchNetworkDataTopicNewFailed object:nil];
+        [[STDataHelper sharedInstance] homeFetchNetworkDataStart];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataCompleted:) name:kNotificationHomeFetchNetworkDataCompleted object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(homeFetchNetworkDataFailed:) name:kNotificationHomeFetchNetworkDataFailed object:nil];
     }
 }
 #pragma - mark 通知回调
-- (void)homeFetchNetworkDataTopicNewCompleted:(NSNotification *)notification
+- (void)homeFetchNetworkDataCompleted:(NSNotification *)notification
 {
     /*更新视图*/
     STModelTopicNew *topicNew = [notification object];
@@ -118,9 +119,10 @@
     });
 }
 
-- (void)homeFetchNetworkDataTopicNewFailed:(NSNotification *)notification
+- (void)homeFetchNetworkDataFailed:(NSNotification *)notification
 {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"无法连接网络" message:@"请检查网络连接，稍后重试." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma - mark 事件响应

@@ -8,8 +8,15 @@
 
 #import "STBaseViewController.h"
 
+@class STBlockButton;
 @interface STNewHouseViewController : STBaseViewController <UITableViewDataSource, UITableViewDelegate>
 {
+    NSMutableArray *_dataArray;
+    
+    STBlockButton *_discountBtn;
+    STBlockButton *_houseCarBtn;
+    UIImageView *_toolsBar;
+    UILabel *_statisticLabel;
     UITableView *_tableView;
 }
 @end

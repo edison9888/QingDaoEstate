@@ -12,7 +12,9 @@
 {
     NSOperationQueue *_operationQueue;
     /*首页*/
-    NSBlockOperation *_homeFetchNetworkDataTopicNewBlockOperation;
+    NSBlockOperation *_homeFetchNetworkDataBlockOperation;
+    /*新房*/
+    NSBlockOperation *_newHouseFetchNetworkDataBlockOperation;
 }
 + (id)sharedInstance;
 @end

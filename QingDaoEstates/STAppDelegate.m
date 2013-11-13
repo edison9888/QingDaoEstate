@@ -15,6 +15,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    /*创建数据库*/
+    NSLog(@"%@", NSHomeDirectory());
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *cacheDBPath = [NSString stringWithFormat:@"%@/Library/Caches/SQLite3.db", NSHomeDirectory()];
+    if (NO == [fileManager fileExistsAtPath:cacheDBPath])
+    {
+        NSString *appDBPath = [NSString stringWithFormat:@"%@/SQLite3.db", [NSBundle mainBundle].resourcePath];
+        [fileManager copyItemAtPath:appDBPath toPath:cacheDBPath error:nil];
+    }
     /*显示主页面*/
     STHomeViewController *home = [[STHomeViewController alloc] init];
     STBaseNavigationController *navController = [[STBaseNavigationController alloc] initWithRootViewController:home];

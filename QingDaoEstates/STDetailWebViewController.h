@@ -8,6 +8,11 @@
 
 #import "STBaseViewController.h"
 
+@class STModelHouse;
 @interface STDetailWebViewController : STBaseViewController
-
+{
+    UIWebView *_webView;
+    UILabel *_titleLabel;
+}
+- (void)layoutWithHouse:(STModelHouse *)house;
 @end

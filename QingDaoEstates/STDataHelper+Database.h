@@ -10,5 +10,11 @@
 #import "STDataHelper.h"
 
 @interface STDataHelper (Database)
+- (void)insertHouse:(NSDictionary *)dict;
+- (void)updateHouse:(NSDictionary *)dict;
+@end
 
+/*新房*/
+@interface STDataHelper (DatabaseNewHouse)
+- (NSMutableArray *)newHouseFetchDatabaseData;
 @end

@@ -14,9 +14,17 @@
 @end
 
 /*首页*/
-#define kNotificationHomeFetchNetworkDataTopicNewCompleted @"kNotificationHomeFetchNetworkDataTopicNewCompleted"
-#define kNotificationHomeFetchNetworkDataTopicNewFailed @"kNotificationHomeFetchNetworkDataTopicNewFailed"
-@interface STDataHelper (Home)
-- (void)homeFetchNetworkDataTopicNewStart;
-- (void)homeFetchNetworkDataTopicNewCancel;
+#define kNotificationHomeFetchNetworkDataCompleted @"kNotificationHomeFetchNetworkDataCompleted"
+#define kNotificationHomeFetchNetworkDataFailed @"kNotificationHomeFetchNetworkDataFailed"
+@interface STDataHelper (NetworkHome)
+- (void)homeFetchNetworkDataStart;
+- (void)homeFetchNetworkDataCancel;
+@end
+
+/*新房*/
+#define kNotificationNewHouseFetchNetworkDataCompleted @"kNotificationNewHouseFetchNetworkDataCompleted"
+#define kNotificationNewHouseFetchNetworkDataFailed @"kNotificationNewHouseFetchNetworkDataFailed"
+@interface STDataHelper (NetworkNewHouse)
+- (void)newHouseFetchNetworkDataStart;
+- (void)newHouseFetchNetworkDataCancel;
 @end
