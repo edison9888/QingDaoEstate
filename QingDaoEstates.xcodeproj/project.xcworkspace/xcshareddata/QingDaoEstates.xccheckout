@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FF9E7E1A-1EC5-4053-89EA-C091709B12B4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>QingDaoEstates</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D3C23F66-8EC1-4A51-AB92-EDB230684A4C</key>
+		<string>https://github.com/scottpang/QingDaoEstate.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>QingDaoEstates.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D3C23F66-8EC1-4A51-AB92-EDB230684A4C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/scottpang/QingDaoEstate.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D3C23F66-8EC1-4A51-AB92-EDB230684A4C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D3C23F66-8EC1-4A51-AB92-EDB230684A4C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>QingDaoEstate</string>
+		</dict>
+	</array>
+</dict>
+</plist>
