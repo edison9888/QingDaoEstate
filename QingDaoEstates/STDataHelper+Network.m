@@ -19,11 +19,31 @@
 {
     NSString *urlString = @"http://yezhu.qingdaonews.com/htouch/topic_news.php?cate=43133";
     NSURL *url = [NSURL URLWithString:urlString];
-    
-    [self homeFetchNetworkDataTopicNewCancel];
-    _homeFetchNetworkDataTopicNewBlockOperation = [NSBlockOperation blockOperationWithBlock:^{
-        
+    NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSData *jsonData = [NSData dataWithContentsOfURL:url];
+        if (jsonData)
+        {
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+
+            STModelHouse *house = [[STModelHouse alloc] init];
+            house.houseImg = [jsonDict objectForKey:@"img"];
+            house.houseMemo = [jsonDict objectForKey:@"memo"];
+            house.houseNid = [jsonDict objectForKey:@"nid"];
+            
+            STModelTopicNew *topicNew = [[STModelTopicNew alloc] init];
+            topicNew.topicNewHouse = house;
+            topicNew.topicNewTitle = [jsonDict objectForKey:@"title"];
+            /*通知回调*/
+            _homeFetchNetworkDataTopicNewBlockOperation = nil;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationHomeFetchNetworkDataTopicNewCompleted object:topicNew];
+        }else {
+            /*通知回调*/
+            _homeFetchNetworkDataTopicNewBlockOperation = nil;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationHomeFetchNetworkDataTopicNewFailed object:nil];
+        }
     }];
+    _homeFetchNetworkDataTopicNewBlockOperation = blockOperation;
+    [_operationQueue addOperation:blockOperation];
 }
 
 - (void)homeFetchNetworkDataTopicNewCancel

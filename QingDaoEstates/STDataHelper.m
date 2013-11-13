@@ -24,7 +24,7 @@
     {
         _operationQueue = [[NSOperationQueue alloc] init];
         /*首页*/
-        _homeFetchNetworkDataTopicNewBlockOperation = [[NSBlockOperation alloc] init];
+        _homeFetchNetworkDataTopicNewBlockOperation = nil;
     }
     return self;
 }

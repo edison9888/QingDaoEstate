@@ -15,6 +15,8 @@
 
 #import "STDataHelper+Network.h"
 #import "STModelTopicNew.h"
+#import "UIImageView+WebCache.h"
+#import "STModelHouse.h"
 
 @implementation STHomeViewController
 
@@ -43,20 +45,28 @@
     UIImageView *headerView = [[UIImageView alloc] init];
     [self.view addSubview:headerView];
     headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 142);
-    headerView.backgroundColor = [UIColor yellowColor];
+//    headerView.backgroundColor = [UIColor yellowColor];
     
-    UIImageView *headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (142-60)/2.0f, 80, 60)];
-    [headerView addSubview:headerImageView];
-    headerImageView.backgroundColor = [UIColor redColor];
+    _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, (142-60)/2.0f, 80, 60)];
+    [headerView addSubview:_headerImageView];
+//    _headerImageView.backgroundColor = [UIColor redColor];
     
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, (142-60)/2.0f, 200, 25)];
-    [headerView addSubview:headerLabel];
-    headerLabel.backgroundColor = [UIColor greenColor];
+    _headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(100+5, (142-60)/2.0f, 200, 25)];
+    [headerView addSubview:_headerLabel];
+//    _headerLabel.backgroundColor = [UIColor greenColor];
+    _headerLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+    _headerLabel.numberOfLines = 1;
+    _headerLabel.textColor = [UIColor blackColor];
     
-    UILabel *headerContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, (142-60)/2.0f, 200, 25)];
-    [headerView addSubview:headerLabel];
-    headerLabel.backgroundColor = [UIColor greenColor];
-
+    _headerContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(100, (142-60)/2.0f+25, 200, 50)];
+    [headerView addSubview:_headerContentTextView];
+//    _headerContentLabel.backgroundColor = [UIColor cyanColor];
+    _headerContentTextView.font = [UIFont boldSystemFontOfSize:15.0f];
+    _headerContentTextView.showsVerticalScrollIndicator = NO;
+    _headerContentTextView.editable = NO;
+    _headerContentTextView.textColor = [UIColor whiteColor];
+    _headerContentTextView.backgroundColor = [UIColor clearColor];
+    
     /*9个按钮*/
     NSArray *row0 = [NSArray arrayWithObjects:@"xinfang.png", @"ershou.png", @"zufang.png", nil];
     NSArray *row1 = [NSArray arrayWithObjects:@"zhaofang.png", @"tuan.png", @"kanfang.png", nil];
@@ -87,7 +97,11 @@
 {
     /*更新视图*/
     STModelTopicNew *topicNew = [notification object];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_headerImageView setImageWithURL:[NSURL URLWithString:topicNew.topicNewHouse.houseImg]];
+        _headerLabel.text = topicNew.topicNewTitle;
+        _headerContentTextView.text = topicNew.topicNewHouse.houseMemo;
+    });
 }
 
 - (void)homeFetchNetworkDataTopicNewFailed:(NSNotification *)notification

@@ -12,5 +12,9 @@
 @interface STHomeViewController : STBaseViewController
 {
     NSMutableArray *_dataArray;
+    
+    UIImageView *_headerImageView;
+    UILabel *_headerLabel;
+    UITextView *_headerContentTextView;
 }
 @end
