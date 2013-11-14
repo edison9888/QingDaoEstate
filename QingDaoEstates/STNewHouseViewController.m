@@ -19,29 +19,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     /*初始化数据源*/
     _dataArray = [[NSMutableArray alloc] init];
     
     /*标题*/
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)];
-    [self.navigationItem.titleView addSubview:titleLabel];
-    titleLabel.text = @"找新房";
-    titleLabel.font = [UIFont boldSystemFontOfSize:20.0f];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    SET_TITLE(@"找新房");
     
-    /*地图按钮*/
-    STBlockButton *mapBtn = [STBlockButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationItem.titleView addSubview:mapBtn];
-    mapBtn.frame = CGRectMake(200, (44-30.5)/2.0f, 45, 30.5);
-    [mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn.png"] forState:UIControlStateNormal];
-    [mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn_sel.png"] forState:UIControlStateHighlighted];
-    
-    /*搜索按钮*/
-    STBlockButton *searchBtn = [STBlockButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationItem.titleView addSubview:searchBtn];
-    searchBtn.frame = CGRectMake(260, (44-30.5)/2.0f, 45, 30.5);
-    [searchBtn setBackgroundImage:[UIImage imageNamed:@"LP_freshHouse_search.png"] forState:UIControlStateNormal];
+    /*创建地图按钮和搜索按钮*/
+    CREATE_MAP_SEARCH_BUTTONS;
     
     /*打折优惠按钮*/
     _discountBtn = [STBlockButton buttonWithType:UIButtonTypeCustom];
@@ -58,22 +44,7 @@
     [_houseCarBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     /*四个按钮的工具条*/
-    _toolsBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
-    _toolsBar.userInteractionEnabled = YES;
-    _toolsBar.image = [UIImage imageNamed:@"LP_mogu_loupanBg.png"];
-    NSArray *btnNames = [NSArray arrayWithObjects:@"区域", @"类型", @"价格", @"排序", nil];
-    for (int i = 0; i <= 3; i++)
-    {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_toolsBar addSubview:btn];
-        btn.frame = CGRectMake(i*80, 0, 80, 30);
-        [btn setTitle:[btnNames objectAtIndex:i] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        btn.titleEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 10);
-        [btn setImage:[UIImage imageNamed:@"LP_mogu_angel"] forState:UIControlStateNormal];
-        btn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
-        [btn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    CREATE_TOOLS_BAR_WITH_FRAME(0, 0, kScreenWidth, 30);
     
     /*统计的信息栏*/
     _statisticLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, self.view.bounds.size.width, 20)];
@@ -81,21 +52,38 @@
     _statisticLabel.backgroundColor = [UIColor redColor];
     
     /*列表*/
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kScreenHeight-64) style:UITableViewStylePlain];
-    [self.view addSubview:_tableView];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [_tableView registerClass:[STNewHouseCell class] forCellReuseIdentifier:@"CELLID"];
+    CREATE_EGO_TABLEVIEW_WITH_FRAME(0, 0, kScreenWidth, kScreenHeight-64);
     
-    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, -_tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)];
-    [_tableView addSubview:_refreshHeaderView];
-    _refreshHeaderView.delegate = self;
-    [_refreshHeaderView refreshLastUpdatedDate];
+    /*筛选视图*/
+    _selectView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, kScreenWidth, 180)];
+    [self.view addSubview:_selectView];
+    _selectView.userInteractionEnabled = YES;
     
-    _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0, _tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)];
-    [_tableView addSubview:_refreshFooterView];
-    _refreshFooterView.delegate = self;
-    [_refreshFooterView refreshLastUpdatedDate];
+    _picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 30, kScreenWidth, 150)];
+    [_selectView addSubview:_picker];
+    _picker.dataSource = self;
+    _picker.delegate = self;
+    _picker.backgroundColor = [UIColor whiteColor];
+    _picker.userInteractionEnabled = YES;
+    
+    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 30)];
+    [_selectView addSubview:accessoryView];
+    accessoryView.userInteractionEnabled = YES;
+    accessoryView.backgroundColor = [UIColor grayColor];
+    
+    _pickerCancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [accessoryView addSubview:_pickerCancelBtn];
+    _pickerCancelBtn.frame = CGRectMake((30-25)/2.0f, (30-25)/2.0f, 50, 25);
+    [_pickerCancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [_pickerCancelBtn addTarget:self action:@selector(pickerCancelClicked) forControlEvents:UIControlEventTouchUpInside];
+    _pickerCancelBtn.backgroundColor = [UIColor yellowColor];
+    
+    _pickerConfirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [accessoryView addSubview:_pickerConfirmBtn];
+    _pickerConfirmBtn.frame = CGRectMake(kScreenWidth-(30-25)/2.0f-50, (30-25)/2.0f, 50, 25);
+    [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [_pickerConfirmBtn addTarget:self action:@selector(pickerConfirmClicked) forControlEvents:UIControlEventTouchUpInside];
+    _pickerConfirmBtn.backgroundColor = [UIColor yellowColor];
     
     /*加载网络*/
     [[STDataHelper sharedInstance] newHouseFetchNetworkDataStart];
@@ -141,16 +129,165 @@
 }
 
 #pragma - mark 事件响应
-- (void)toolsBarButtonClicked:(UIButton *)btn
-{
-    
-}
-
 - (void)backButtonClicked
 {
     [super backButtonClicked];
     /*如果需要的话,会取消本次线程*/
     [[STDataHelper sharedInstance] newHouseFetchNetworkDataCancel];
+}
+
+- (void)mapBtnClicked
+{
+    
+}
+
+- (void)searchBtnClicked
+{
+    
+}
+
+- (void)toolsBarButtonClicked:(UIButton *)btn
+{
+    if (_pickerIsVisible)
+    {
+        /*隐藏*/
+        [self hidePickerView];
+        _tableView.scrollEnabled = YES;
+        /*所有cell可以点击*/
+        for (int i = 0; i <= _dataArray.count-1; i++)
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+            cell.userInteractionEnabled = YES;
+        }
+        /*所有按钮可以点击*/
+        for (id obj in _toolsBar.subviews) {
+            if ([obj isMemberOfClass:[UIButton class]])
+            {
+                UIButton *button = (UIButton *)obj;
+                button.enabled = YES;
+            }
+        }
+    }else {
+        _tableView.scrollEnabled = NO;
+        /*所有cell不可点击*/
+        for (int i = 0; i <= _dataArray.count-1; i++)
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+            cell.userInteractionEnabled = NO;
+        }
+        if (btn == _areaBtn)
+        {
+            /*区域*/
+            _pickerBtnIndex = 0;
+            
+        }else if (btn == _typeBtn)
+        {
+            /*类型*/
+            _pickerBtnIndex = 1;
+            
+        }else if (btn == _priceBtn)
+        {
+            /*价格*/
+            _pickerBtnIndex = 2;
+        }else {
+            /*排序*/
+            _pickerBtnIndex = 3;
+        }
+        /*显示*/
+        [self showPickerView];
+        /*别的按钮不可点击*/
+        for (id obj in _toolsBar.subviews) {
+            if ([obj isMemberOfClass:[UIButton class]] && obj != btn)
+            {
+                UIButton *button = (UIButton *)obj;
+                button.enabled = NO;
+            }
+        }
+    }
+    _pickerIsVisible = !_pickerIsVisible;
+}
+
+- (void)pickerCancelClicked
+{
+    _pickerSelectedValue = @"";
+    
+    _tableView.scrollEnabled = YES;
+    /*所有cell可以点击*/
+    for (int i = 0; i <= _dataArray.count-1; i++)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+        cell.userInteractionEnabled = YES;
+    }
+    /*所有按钮可以点击*/
+    for (id obj in _toolsBar.subviews) {
+        if ([obj isMemberOfClass:[UIButton class]])
+        {
+            UIButton *button = (UIButton *)obj;
+            button.enabled = YES;
+        }
+    }
+    [self hidePickerView];
+}
+
+- (void)pickerConfirmClicked
+{
+    /*请求数据库*/
+    NSArray *btnsArray = [NSArray arrayWithObjects:_areaBtn, _typeBtn, _priceBtn, _sortBtn, nil];
+    UIButton *button = [btnsArray objectAtIndex:_pickerBtnIndex];
+    if (NO == [button.titleLabel.text isEqualToString:_pickerSelectedValue])
+    {
+        if (_pickerBtnIndex == 0)
+        {
+            /*区域*/
+            
+        }else if (_pickerBtnIndex == 1) {
+            /*类型*/
+            
+        }else if (_pickerBtnIndex == 2) {
+            /*价格*/
+            
+        }else {
+            /*排序*/
+            
+        }
+    }
+    
+    _tableView.scrollEnabled = YES;
+    /*所有cell可以点击*/
+    for (int i = 0; i <= _dataArray.count-1; i++)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        UITableViewCell *cell = [_tableView cellForRowAtIndexPath:indexPath];
+        cell.userInteractionEnabled = YES;
+    }
+    /*所有按钮可以点击*/
+    for (id obj in _toolsBar.subviews) {
+        if ([obj isMemberOfClass:[UIButton class]])
+        {
+            UIButton *button = (UIButton *)obj;
+            button.enabled = YES;
+        }
+    }
+    [self hidePickerView];
+}
+
+#pragma - mark 辅助函数
+- (void)showPickerView
+{
+    [_picker reloadAllComponents];
+    [UIView animateWithDuration:0.5 animations:^{
+        _selectView.frame = CGRectMake(0, self.view.bounds.size.height-180, kScreenWidth, 180);
+    }];
+}
+
+- (void)hidePickerView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        _selectView.frame = CGRectMake(0, self.view.bounds.size.height, kScreenWidth, 180);
+    }];
 }
 
 #pragma - mark EGO Header
@@ -184,16 +321,62 @@
 }
 
 #pragma - mark UIScrollView
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+EGO_UISCROLLVIEW_DELEGATE
+
+#pragma - mark UIPickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+    /*一列*/
+    return 1;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    NSArray *datasArray = [NSArray arrayWithObjects:GET_AREAS_ARR, GET_TYPES_ARR, GET_PRICES_ARR, GET_ORDERS_ARR, nil];
+    return [[datasArray objectAtIndex:_pickerBtnIndex] count];
+//    if (_pickerBtnIndex == 0)
+//    {
+//        return GET_AREAS_ARR.count;
+//    }else if (_pickerBtnIndex == 1) {
+//        return GET_TYPES_ARR.count;
+//    }else if (_pickerBtnIndex == 2) {
+//        return GET_PRICES_ARR.count;
+//    }else {
+//        return GET_ORDERS_ARR.count;
+//    }
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    /*列宽固定*/
+    return kScreenWidth;
+}
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    /*行高固定*/
+    return 30;
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    NSArray *datasArray = [NSArray arrayWithObjects:GET_AREAS_ARR, GET_TYPES_ARR, GET_PRICES_ARR, GET_ORDERS_ARR, nil];
+    return [[datasArray objectAtIndex:_pickerBtnIndex] objectAtIndex:row];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-    [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+    /*拿到选中的值*/
+    if (_pickerBtnIndex == 0)
+    {
+        /*区域*/
+        _pickerSelectedValue = [GET_AREAS_ARR objectAtIndex:row];
+    }else if (_pickerBtnIndex == 1) {
+        /*类型*/
+        _pickerSelectedValue = [GET_TYPES_ARR objectAtIndex:row];
+    }else if (_pickerBtnIndex == 2) {
+        /*价格*/
+        _pickerSelectedValue = [GET_PRICES_ARR objectAtIndex:row];
+    }else {
+        /*排序*/
+        _pickerSelectedValue = [GET_ORDERS_ARR objectAtIndex:row];
+    }
 }
 
 #pragma - mark UITableView

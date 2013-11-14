@@ -15,8 +15,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    /*创建数据库*/
     NSLog(@"%@", NSHomeDirectory());
+    /*创建数据库*/
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *cacheDBPath = [NSString stringWithFormat:@"%@/Library/Caches/SQLite3.db", NSHomeDirectory()];
     if (NO == [fileManager fileExistsAtPath:cacheDBPath])

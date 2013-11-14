@@ -16,23 +16,10 @@
 {
     [super viewDidLoad];
 	/*标题*/
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)];
-    [self.navigationItem.titleView addSubview:titleLabel];
-    titleLabel.text = @"二手房";
-    titleLabel.font = [UIFont boldSystemFontOfSize:20.0f];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    /*地图按钮*/
-    STBlockButton *mapBtn = [STBlockButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationItem.titleView addSubview:mapBtn];
-    mapBtn.frame = CGRectMake(200, (44-30.5)/2.0f, 45, 30.5);
-    [mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn.png"] forState:UIControlStateNormal];
-    [mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn_sel.png"] forState:UIControlStateHighlighted];
-    /*搜索按钮*/
-    STBlockButton *searchBtn = [STBlockButton buttonWithType:UIButtonTypeCustom];
-    [self.navigationItem.titleView addSubview:searchBtn];
-    searchBtn.frame = CGRectMake(260, (44-30.5)/2.0f, 45, 30.5);
-    [searchBtn setBackgroundImage:[UIImage imageNamed:@"LP_freshHouse_search.png"] forState:UIControlStateNormal];
+    SET_TITLE(@"二手房");
+    
+    /*创建地图按钮和搜索按钮*/
+    CREATE_MAP_SEARCH_BUTTONS;
     
     /*列表*/
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kScreenHeight-64) style:UITableViewStylePlain];
@@ -97,8 +84,18 @@
 }
 
 #pragma - mark 事件响应
+- (void)mapBtnClicked
+{
+    
+}
+
+- (void)searchBtnClicked
+{
+    
+}
+
 - (void)toolsBarBtnClick:(UIButton *)btn
 {
-    NSLog(@"工具条的button");
+    
 }
 @end

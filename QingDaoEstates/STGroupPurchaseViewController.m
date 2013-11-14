@@ -14,12 +14,7 @@
 {
     [super viewDidLoad];
 	/*标题*/
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)];
-    [self.navigationItem.titleView addSubview:titleLabel];
-    titleLabel.text = @"团购";
-    titleLabel.font = [UIFont boldSystemFontOfSize:20.0f];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    SET_TITLE(@"团购");
 }
 
 @end

@@ -64,6 +64,9 @@
 @implementation STDataHelper (NetworkNewHouse)
 - (void)newHouseFetchNetworkDataStart
 {
+    /*
+     http://yezhu.qingdaonews.com/htouch/news_house_list.php?type=&page=1&maxmoney=99999999&area=%CA%D0%B1%B1%C7%F8&characteristic=0&decoration=0&key=&minmoney=0&opentime=0&seq=0
+     */
     NSString *urlString = @"http://yezhu.qingdaonews.com/htouch/news_house_list.php?type=&page=1&maxmoney=999999&area=&characteristic=0&decoration=0&key=&minmoney=0&opentime=0&seq=0";
     NSURL *url = [NSURL URLWithString:urlString];
     NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{

@@ -15,5 +15,202 @@
     #import <Foundation/Foundation.h>
 #endif
 
+/*屏幕宽高*/
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+/*四个按钮的工具条*/
+#define CREATE_TOOLS_BAR_WITH_FRAME(mX, mY, mWidth, mHeight) \
+_toolsBar = [[UIImageView alloc] initWithFrame:CGRectMake((mX), (mY), (mWidth), (mHeight))]; \
+_toolsBar.userInteractionEnabled = YES; \
+_toolsBar.image = [UIImage imageNamed:@"LP_mogu_loupanBg.png"]; \
+\
+_areaBtn = [UIButton buttonWithType:UIButtonTypeCustom]; \
+[_toolsBar addSubview:_areaBtn]; \
+_areaBtn.frame = CGRectMake(0*80, 0, 80, 30); \
+[_areaBtn setTitle:@"区域" forState:UIControlStateNormal]; \
+[_areaBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal]; \
+_areaBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 10); \
+[_areaBtn setImage:[UIImage imageNamed:@"LP_mogu_angel"] forState:UIControlStateNormal]; \
+_areaBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0); \
+[_areaBtn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside]; \
+\
+_typeBtn = [UIButton buttonWithType:UIButtonTypeCustom]; \
+[_toolsBar addSubview:_typeBtn]; \
+_typeBtn.frame = CGRectMake(1*80, 0, 80, 30); \
+[_typeBtn setTitle:@"类型" forState:UIControlStateNormal]; \
+[_typeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal]; \
+_typeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 10); \
+[_typeBtn setImage:[UIImage imageNamed:@"LP_mogu_angel"] forState:UIControlStateNormal]; \
+_typeBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0); \
+[_typeBtn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside]; \
+\
+_priceBtn = [UIButton buttonWithType:UIButtonTypeCustom]; \
+[_toolsBar addSubview:_priceBtn]; \
+_priceBtn.frame = CGRectMake(2*80, 0, 80, 30); \
+[_priceBtn setTitle:@"价格" forState:UIControlStateNormal]; \
+[_priceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal]; \
+_priceBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 10); \
+[_priceBtn setImage:[UIImage imageNamed:@"LP_mogu_angel"] forState:UIControlStateNormal]; \
+_priceBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0); \
+[_priceBtn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside]; \
+\
+_sortBtn = [UIButton buttonWithType:UIButtonTypeCustom]; \
+[_toolsBar addSubview:_sortBtn]; \
+_sortBtn.frame = CGRectMake(3*80, 0, 80, 30); \
+[_sortBtn setTitle:@"排序" forState:UIControlStateNormal]; \
+[_sortBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal]; \
+_sortBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 10); \
+[_sortBtn setImage:[UIImage imageNamed:@"LP_mogu_angel"] forState:UIControlStateNormal]; \
+_sortBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0); \
+[_sortBtn addTarget:self action:@selector(toolsBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+/*UIViewController自定义标题*/
+#define SET_TITLE(mTitle) \
+UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)]; \
+[self.navigationItem.titleView addSubview:titleLabel]; \
+titleLabel.text = mTitle; \
+titleLabel.font = [UIFont boldSystemFontOfSize:20.0f]; \
+titleLabel.textColor = [UIColor whiteColor]; \
+titleLabel.textAlignment = NSTextAlignmentCenter;
+
+/*地图按钮和搜索按钮*/
+#define CREATE_MAP_SEARCH_BUTTONS \
+STBlockButton *mapBtn = [STBlockButton buttonWithType:UIButtonTypeCustom]; \
+[self.navigationItem.titleView addSubview:mapBtn]; \
+mapBtn.frame = CGRectMake(200, (44-30.5)/2.0f, 45, 30.5); \
+[mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn.png"] forState:UIControlStateNormal]; \
+[mapBtn setBackgroundImage:[UIImage imageNamed:@"LP_mogu_dituBtn_sel.png"] forState:UIControlStateHighlighted]; \
+[mapBtn addTarget:self action:@selector(mapBtnClicked) forControlEvents:UIControlEventTouchUpInside]; \
+\
+STBlockButton *searchBtn = [STBlockButton buttonWithType:UIButtonTypeCustom]; \
+[self.navigationItem.titleView addSubview:searchBtn]; \
+searchBtn.frame = CGRectMake(260, (44-30.5)/2.0f, 45, 30.5); \
+[searchBtn setBackgroundImage:[UIImage imageNamed:@"LP_freshHouse_search.png"] forState:UIControlStateNormal]; \
+[searchBtn addTarget:self action:@selector(searchBtnClicked) forControlEvents:UIControlEventTouchUpInside]; 
+
+/*创建包含上拉和下拉的列表*/
+#define CREATE_EGO_TABLEVIEW_WITH_FRAME(mX, mY, mWidth, mHeight) \
+_tableView = [[UITableView alloc] initWithFrame:CGRectMake((mX), (mY), (mWidth), (mHeight)) style:UITableViewStylePlain]; \
+[self.view addSubview:_tableView]; \
+_tableView.delegate = self; \
+_tableView.dataSource = self; \
+[_tableView registerClass:[STNewHouseCell class] forCellReuseIdentifier:@"CELLID"]; \
+\
+_refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, -_tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)]; \
+[_tableView addSubview:_refreshHeaderView]; \
+_refreshHeaderView.delegate = self; \
+[_refreshHeaderView refreshLastUpdatedDate]; \
+\
+_refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0, _tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)]; \
+[_tableView addSubview:_refreshFooterView]; \
+_refreshFooterView.delegate = self; \
+[_refreshFooterView refreshLastUpdatedDate];
+
+/*下拉刷新时要实现的代理*/
+
+#define EGO_UISCROLLVIEW_DELEGATE \
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView \
+{ \
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView]; \
+    [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView]; \
+} \
+\
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate \
+{ \
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView]; \
+    [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView]; \
+}
+
+/*
+ 所有区域:
+ 不限
+ 市南区
+ 市北区
+ 李沧区
+ 黄岛区
+ 城阳区
+ 崂山区
+ 高新区
+ 即墨
+ 胶州
+ 平度
+ 莱西
+ */
+#define kArea0 @"不限"
+#define kArea1 @"市南区"
+#define kArea2 @"市北区"
+#define kArea3 @"李沧区"
+#define kArea4 @"黄岛区"
+#define kArea5 @"城阳区"
+#define kArea6 @"崂山区"
+#define kArea7 @"高新区"
+#define kArea8 @"即墨"
+#define kArea9 @"胶州"
+#define kArea10 @"平度"
+#define kArea11 @"莱西"
+
+#define GET_AREAS_ARR [NSArray arrayWithObjects:kArea0, kArea1, kArea2, kArea3, kArea4, kArea5, kArea6, kArea7, kArea8, kArea9, kArea10, kArea11, nil]
+/*
+ 类型:
+ 不限
+ 住宅
+ LOFT
+ 公寓
+ 写字楼
+ 花园洋房
+ 别墅
+ 商铺
+ 经济适用房
+ */
+#define kType0 @"不限"
+#define kType1 @"住宅"
+#define kType2 @"LOFT"
+#define kType3 @"公寓"
+#define kType4 @"写字楼"
+#define kType5 @"花园洋房"
+#define kType6 @"别墅"
+#define kType7 @"商铺"
+#define kType8 @"经济适用房"
+
+#define GET_TYPES_ARR [NSArray arrayWithObjects:kType0, kType1, kType2, kType3, kType4, kType5, kType6, kType7, kType8, nil]
+
+/*
+ 价格:
+ 不限
+ 6000以下
+ 6000-8000
+ 8000-10000
+ 10000-20000
+ 20000以上
+ */
+#define kPrice0 @"不限"
+#define kPrice1 @"6000以下"
+#define kPrice2 @"6000-8000"
+#define kPrice3 @"8000-10000"
+#define kPrice4 @"10000-20000"
+#define kPrice5 @"20000以上"
+
+#define GET_PRICES_ARR [NSArray arrayWithObjects:kPrice0, kPrice1, kPrice2, kPrice3, kPrice4, kPrice5, nil]
+
+/*
+ 价格排序:
+ 默认排序
+ 价格由高到低
+ 价格由低到高
+ 开盘时间倒序
+ 开盘时间顺序
+ 入住时间倒序
+ 入住时间顺序
+ */
+
+#define kOrder0 @"默认排序"
+#define kOrder1 @"价格由高到低"
+#define kOrder2 @"价格由低到高"
+#define kOrder3 @"开盘时间倒序"
+#define kOrder4 @"开盘时间顺序"
+#define kOrder5 @"入住时间倒序"
+#define kOrder6 @"入住时间顺序"
+
+#define GET_ORDERS_ARR [NSArray arrayWithObjects:kOrder0, kOrder1, kOrder2, kOrder3, kOrder4, kOrder5, kOrder6, nil]
+

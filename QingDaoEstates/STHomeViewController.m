@@ -24,12 +24,7 @@
 {
     [super viewDidLoad];
     /*导航栏标题*/
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width-110)/2.0f, 0, 100, 44)];
-    [self.navigationItem.titleView addSubview:titleLabel];
-    titleLabel.text = @"青岛房产";
-    titleLabel.font = [UIFont boldSystemFontOfSize:20.0f];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    SET_TITLE(@"青岛房产");
     
     /*最底层背景*/
     UIImageView *bgView = [[UIImageView alloc] init];
