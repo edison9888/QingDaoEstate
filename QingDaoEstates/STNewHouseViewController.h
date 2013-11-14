@@ -7,9 +7,11 @@
 //
 
 #import "STBaseViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "EGORefreshTableFooterView.h"
 
 @class STBlockButton;
-@interface STNewHouseViewController : STBaseViewController <UITableViewDataSource, UITableViewDelegate>
+@interface STNewHouseViewController : STBaseViewController <UITableViewDataSource, UITableViewDelegate, EGORefreshTableHeaderDelegate, EGORefreshTableFooterDelegate>
 {
     NSMutableArray *_dataArray;
     
@@ -17,6 +19,10 @@
     STBlockButton *_houseCarBtn;
     UIImageView *_toolsBar;
     UILabel *_statisticLabel;
+    
     UITableView *_tableView;
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    EGORefreshTableFooterView *_refreshFooterView;
+    BOOL _isLoading;
 }
 @end

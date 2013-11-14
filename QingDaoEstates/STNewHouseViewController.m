@@ -87,6 +87,16 @@
     _tableView.dataSource = self;
     [_tableView registerClass:[STNewHouseCell class] forCellReuseIdentifier:@"CELLID"];
     
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, -_tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)];
+    [_tableView addSubview:_refreshHeaderView];
+    _refreshHeaderView.delegate = self;
+    [_refreshHeaderView refreshLastUpdatedDate];
+    
+    _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:CGRectMake(0, _tableView.bounds.size.height, _tableView.bounds.size.width, _tableView.bounds.size.height)];
+    [_tableView addSubview:_refreshFooterView];
+    _refreshFooterView.delegate = self;
+    [_refreshFooterView refreshLastUpdatedDate];
+    
     /*加载网络*/
     [[STDataHelper sharedInstance] newHouseFetchNetworkDataStart];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newHouseFetchNetworkDataCompleted:) name:kNotificationNewHouseFetchNetworkDataCompleted object:nil];
@@ -119,6 +129,8 @@
         _statisticLabel.text = [NSString stringWithFormat:@"共找到%@条信息", total_num];
 
         [_tableView reloadData];
+        /*刷新上拉刷新视图的位置*/
+        _refreshFooterView.frame = CGRectMake(0, _tableView.contentSize.height, _tableView.bounds.size.width, _tableView.bounds.size.height);
     });
 }
 
@@ -137,6 +149,51 @@
 - (void)backButtonClicked
 {
     [super backButtonClicked];
+    /*如果需要的话,会取消本次线程*/
+    [[STDataHelper sharedInstance] newHouseFetchNetworkDataCancel];
+}
+
+#pragma - mark EGO Header
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    /*下拉触发*/
+    NSLog(@"下拉触发");
+}
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    return _isLoading;
+}
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    return [NSDate date];
+}
+
+#pragma - mark EGO Footer
+- (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableFooterView*)view
+{
+    /*上拉触发*/
+    NSLog(@"上拉触发");
+}
+- (BOOL)egoRefreshTableFooterDataSourceIsLoading:(EGORefreshTableFooterView*)view
+{
+    return _isLoading;
+}
+- (NSDate*)egoRefreshTableFooterDataSourceLastUpdated:(EGORefreshTableFooterView*)view
+{
+    return [NSDate date];
+}
+
+#pragma - mark UIScrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 #pragma - mark UITableView
@@ -186,7 +243,7 @@
         STModelHouse *house = [_dataArray objectAtIndex:indexPath.row];
         return [STNewHouseCell cellHeightWithHouse:house];
     }
-    return kScreenHeight-50-3*44-20;
+    return kScreenHeight-30-44-20;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
